@@ -33,10 +33,10 @@ class Car {
         this.height = 100;
         this.rotation = 0;
         this.S = {};
-        this.A = {};
-        this.B = {};
-        this.C = {};
-        this.D = {};
+        this.SA = {};
+        this.SB = {};
+        this.SC = {};
+        this.SD = {};
         this.pointAngle = atan(this.width / this.height);
         this.radius = 25 * Math.sqrt(5);
     }
@@ -46,45 +46,48 @@ class Car {
             x: this.x + 25,
             y: this.y + 50
         }
-        this.A = {
+        this.SA = {
             x: -this.radius * cos(this.phi + this.pointAngle - 90) + this.S.x,
             y: this.radius * sin(this.phi + this.pointAngle - 90) + this.S.y
         }
-        this.B = {
+        this.SB = {
             x: -this.radius * cos(this.phi + -this.pointAngle - 90) + this.S.x,
             y: this.radius * sin(this.phi + -this.pointAngle - 90) + this.S.y
         }
-        this.C = {
+        this.SC = {
             x: -this.radius * cos(this.phi + this.pointAngle + 90) + this.S.x,
             y: this.radius * sin(this.phi + this.pointAngle + 90) + this.S.y
         }
-        this.D = {
+        this.SD = {
             x: -this.radius * cos(this.phi + -this.pointAngle + 90) + this.S.x,
             y: this.radius * sin(this.phi + -this.pointAngle + 90) + this.S.y
         }
 
     }
     initialize(id) {
-        this.div = document.getElementById(id);
+            this.div = document.getElementById(id);
 
-        let stl = this.div.style;
+            let stl = this.div.style;
 
-        stl.position = "absolute";
-        stl.backgroundColor = "black";
-        //stl.backgroundImage = `url(${this.img})`;
-        //stl.backgroundSize = "100px"
-        stl.width = this.width + "px";
-        stl.height = this.height + "px";
-    }
-    turn(direction) {
-        if (direction === "right") {
-            this.rotation -= 5
-            this.div.style.transform = `rotate(${-this.rotation}deg)`
-        } else {
-            this.rotation += 5
-            this.div.style.transform = `rotate(${-this.rotation}deg)`
+            stl.position = "absolute";
+            stl.backgroundColor = "black";
+            //stl.backgroundImage = `url(${this.img})`;
+            //stl.backgroundSize = "100px"
+            stl.width = this.width + "px";
+            stl.height = this.height + "px";
         }
-    }
+        //Roterer bilen rundt midtpunktet i bil-div
+    turn(direction) {
+            if (direction === "right") {
+                this.rotation -= 5
+                this.div.style.transform = `rotate(${-this.rotation}deg)`
+            } else {
+                this.rotation += 5
+                this.div.style.transform = `rotate(${-this.rotation}deg)`
+            }
+        }
+        //Oppdaterer verdier som akselerasjon, fart, posisjon
+        //Setter også riktig posisjon på div i forhold til x og y-variablene
     render() {
         this.vx *= friction;
         this.vy *= friction;
@@ -100,25 +103,26 @@ class Car {
 
     }
     collisionCheck() {
-        //String for å vite hvor mange hjørner som har kollidert
-        let collisions = "";
-        ["A", "B", "C", "D"].forEach((f) => {
-            let k = this[f];
-            if (((k.x) > width) || k.x < 0) {
-                collisions += f;
-            } else if (((k.y) > height) || k.y < 0) {
-                collisions += f;
+            //String for å vite hvor mange hjørner som har kollidert
+            let collisions = "";
+            ["A", "B", "C", "D"].forEach((f) => {
+                let k = this[f];
+                if (((k.x) > width) || k.x < 0) {
+                    collisions += f;
+                } else if (((k.y) > height) || k.y < 0) {
+                    collisions += f;
+                }
+            })
+
+            //Dersom en kollisjon skjer, log kollisjonshjørner og reset spill
+            if (collisions !== "") {
+                log(collisions);
+                this.reset();
             }
-        })
 
-        //Dersom en kollisjon skjer, log kollisjonshjørner og reset.
-        if (collisions !== "") {
-            log(collisions);
-            this.reset();
+
         }
-
-
-    }
+        //Restarter spill, både posisjon og score
     reset() {
         this.x = 100;
         this.y = 100;
@@ -138,19 +142,25 @@ class Car {
     }
 }
 
-window.onload = () => {
-    let tesla = new Car(100, 100, "bil.png");
-    let keysPressed = new Set;
+class Stone {
+    constructor() {
 
+    }
+
+}
+
+window.onload = () => {
+    //Lager bil
+    let tesla = new Car(100, 100, "bil.png");
+    tesla.initialize("bil");
+
+    //Array som inneholder tasten som er trykket ved en gitt frame
+    let keysPressed = new Set;
 
     const scoreDiv = document.getElementById("score");
     const highscoreDiv = document.getElementById("highscore");
     const scoreLimitDiv = document.getElementById("scorelimit");
 
-
-
-
-    tesla.initialize("bil");
     window.addEventListener("keydown", (e) => {
         keysPressed.add(e.key);
     });
@@ -168,6 +178,7 @@ window.onload = () => {
         highscoreDiv.innerHTML = String(highscore);
         scoreLimitDiv.innerHTML = String(scoreLimit);
 
+        //Sjekker hvilke taster som er trykket ned og gjør korresponderende bevegelse
         keysPressed.forEach((k) => {
             switch (k) {
                 case "w":
@@ -212,3 +223,6 @@ window.onload = () => {
 
 
 }
+
+
+//Når highscore er høy nok, initiate end-sequence
