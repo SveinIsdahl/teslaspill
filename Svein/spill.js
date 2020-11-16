@@ -33,10 +33,10 @@ class Car {
         this.height = 100;
         this.rotation = 0;
         this.S = {};
-        this.A = {};
-        this.B = {};
-        this.C = {};
-        this.D = {};
+        this.SA = {};
+        this.SB = {};
+        this.SC = {};
+        this.SD = {};
         this.pointAngle = atan(this.width / this.height);
         this.radius = 25 * Math.sqrt(5);
     }
@@ -46,19 +46,19 @@ class Car {
             x: this.x + 25,
             y: this.y + 50
         }
-        this.A = {
+        this.SA = {
             x: -this.radius * cos(this.phi + this.pointAngle - 90) + this.S.x,
             y: this.radius * sin(this.phi + this.pointAngle - 90) + this.S.y
         }
-        this.B = {
+        this.SB = {
             x: -this.radius * cos(this.phi + -this.pointAngle - 90) + this.S.x,
             y: this.radius * sin(this.phi + -this.pointAngle - 90) + this.S.y
         }
-        this.C = {
+        this.SC = {
             x: -this.radius * cos(this.phi + this.pointAngle + 90) + this.S.x,
             y: this.radius * sin(this.phi + this.pointAngle + 90) + this.S.y
         }
-        this.D = {
+        this.SD = {
             x: -this.radius * cos(this.phi + -this.pointAngle + 90) + this.S.x,
             y: this.radius * sin(this.phi + -this.pointAngle + 90) + this.S.y
         }
@@ -142,6 +142,13 @@ class Car {
     }
 }
 
+class Stone {
+    constructor() {
+
+    }
+
+}
+
 window.onload = () => {
     //Lager bil
     let tesla = new Car(100, 100, "bil.png");
@@ -216,3 +223,6 @@ window.onload = () => {
 
 
 }
+
+
+//Når highscore er høy nok, initiate end-sequence
