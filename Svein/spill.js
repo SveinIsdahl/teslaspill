@@ -1,0 +1,214 @@
+//@ts-check
+
+//Globale variabler fordi de brukes i alle deler av koden, 
+//const forhindrer at man senere endrer på dem ved uhell, derfor greit å bruke
+const width = 1000;
+const height = 600;
+const friction = 0.98;
+const speedConstant = 0.15;
+const accConstant = 0.1;
+
+
+//Game-stats
+let score = 0;
+let highscore = 0;
+let scoreLimit = 1000;
+
+//Funksjoner 
+const cos = (x) => Math.cos(x * Math.PI / 180);
+const sin = (x) => Math.sin(x * Math.PI / 180);
+const atan = (x) => Math.atan(x) * 180 / Math.PI;
+const log = (x) => console.log(x)
+
+class Car {
+    constructor(x, y, img) {
+        this.x = x;
+        this.y = y;
+        this.vx = 0;
+        this.vy = 0;
+        this.ax = 0;
+        this.ay = 0;
+        this.img = img;
+        this.width = 50;
+        this.height = 100;
+        this.rotation = 0;
+        this.S = {};
+        this.A = {};
+        this.B = {};
+        this.C = {};
+        this.D = {};
+        this.pointAngle = atan(this.width / this.height);
+        this.radius = 25 * Math.sqrt(5);
+    }
+    updateVectors() {
+        this.phi = this.rotation;
+        this.S = {
+            x: this.x + 25,
+            y: this.y + 50
+        }
+        this.A = {
+            x: -this.radius * cos(this.phi + this.pointAngle - 90) + this.S.x,
+            y: this.radius * sin(this.phi + this.pointAngle - 90) + this.S.y
+        }
+        this.B = {
+            x: -this.radius * cos(this.phi + -this.pointAngle - 90) + this.S.x,
+            y: this.radius * sin(this.phi + -this.pointAngle - 90) + this.S.y
+        }
+        this.C = {
+            x: -this.radius * cos(this.phi + this.pointAngle + 90) + this.S.x,
+            y: this.radius * sin(this.phi + this.pointAngle + 90) + this.S.y
+        }
+        this.D = {
+            x: -this.radius * cos(this.phi + -this.pointAngle + 90) + this.S.x,
+            y: this.radius * sin(this.phi + -this.pointAngle + 90) + this.S.y
+        }
+
+    }
+    initialize(id) {
+        this.div = document.getElementById(id);
+
+        let stl = this.div.style;
+
+        stl.position = "absolute";
+        stl.backgroundColor = "black";
+        //stl.backgroundImage = `url(${this.img})`;
+        //stl.backgroundSize = "100px"
+        stl.width = this.width + "px";
+        stl.height = this.height + "px";
+    }
+    turn(direction) {
+        if (direction === "right") {
+            this.rotation -= 5
+            this.div.style.transform = `rotate(${-this.rotation}deg)`
+        } else {
+            this.rotation += 5
+            this.div.style.transform = `rotate(${-this.rotation}deg)`
+        }
+    }
+    render() {
+        this.vx *= friction;
+        this.vy *= friction;
+        this.ax *= 0.55;
+        this.ay *= 0.55;
+        this.vx += this.ax;
+        this.vy += this.ay;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.div.style.left = this.x + "px";
+        this.div.style.top = this.y + "px";
+        this.div.style.transform = `rotate(${-this.rotation}deg)`
+
+    }
+    collisionCheck() {
+        //String for å vite hvor mange hjørner som har kollidert
+        let collisions = "";
+        ["A", "B", "C", "D"].forEach((f) => {
+            let k = this[f];
+            if (((k.x) > width) || k.x < 0) {
+                collisions += f;
+            } else if (((k.y) > height) || k.y < 0) {
+                collisions += f;
+            }
+        })
+
+        //Dersom en kollisjon skjer, log kollisjonshjørner og reset.
+        if (collisions !== "") {
+            log(collisions);
+            this.reset();
+        }
+
+
+    }
+    reset() {
+        this.x = 100;
+        this.y = 100;
+        this.vx = 0;
+        this.vy = 0;
+        this.rotation = 0;
+
+        if (score > highscore) {
+            highscore = score;
+        }
+        score = 0;
+        if (highscore > scoreLimit) {
+            alert("Du har høy nok highscore til å gå videre");
+        }
+
+
+    }
+}
+
+window.onload = () => {
+    let tesla = new Car(100, 100, "bil.png");
+    let keysPressed = new Set;
+
+
+    const scoreDiv = document.getElementById("score");
+    const highscoreDiv = document.getElementById("highscore");
+    const scoreLimitDiv = document.getElementById("scorelimit");
+
+
+
+
+    tesla.initialize("bil");
+    window.addEventListener("keydown", (e) => {
+        keysPressed.add(e.key);
+    });
+
+    window.addEventListener("keyup", (e) => {
+        for (let i = 0; i < keysPressed.size; i++) {
+            if (keysPressed.has(e.key)) {
+                keysPressed.delete(e.key);
+            }
+        }
+    });
+
+    function animation() {
+        scoreDiv.innerHTML = String(score);
+        highscoreDiv.innerHTML = String(highscore);
+        scoreLimitDiv.innerHTML = String(scoreLimit);
+
+        keysPressed.forEach((k) => {
+            switch (k) {
+                case "w":
+                    tesla.ay -= 0.15 * sin(tesla.rotation + 90)
+                    tesla.ax += 0.15 * cos(tesla.rotation + 90)
+                    break;
+                case "a":
+                    tesla.turn("left")
+                    break;
+                case "s":
+                    tesla.ay += 0.15 * sin(tesla.rotation + 90)
+                    tesla.ax -= 0.15 * cos(tesla.rotation + 90)
+                    break;
+                case "d":
+                    tesla.turn("right")
+                    break;
+                case "ArrowRight":
+                    tesla.vx += 0.15;
+                    break;
+                case "ArrowLeft":
+                    tesla.vx -= 0.15;
+                    break;
+                case "ArrowDown":
+                    tesla.vy += 0.15;
+                    break;
+                case "ArrowUp":
+                    tesla.vy -= 0.15
+                    break;
+                default:
+                    log("Error/wrong key pressed")
+                    break;
+            }
+        })
+        tesla.collisionCheck()
+        tesla.updateVectors();
+        tesla.render();
+        requestAnimationFrame(animation);
+
+
+    }
+    animation();
+
+
+}
