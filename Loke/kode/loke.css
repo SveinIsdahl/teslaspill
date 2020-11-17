@@ -1,0 +1,25 @@
+#bane {
+    position: relative;
+    border: solid 1px green;
+    width: 1000px;
+    height: 700px;
+}
+
+#fjell {
+    position: absolute;
+    right: 0px;
+
+}
+
+#bil {
+    background-image: url(../media/cybertruck.png);
+    background-position: center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    position: absolute;
+    width: 150px;
+    height: 80px;
+    bottom: 0px;
+}
