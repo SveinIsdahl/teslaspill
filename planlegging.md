@@ -10,7 +10,7 @@ På gruppa er Loke, Benny, Joakim, Johan og Svein.
 Ett eller flere spill. Hvor felles tema er tesla/spacex.
 
 ### Hensikt: 
-Læringsutbytte. Rekreasjon. 
+Læringsutbytte. Kjekt spill. 
 
 ### Funksjonelle krav: 
 
