@@ -28,7 +28,7 @@ const sin = (x) => Math.sin(x * Math.PI / 180);
  */
 const atan = (x) => Math.atan(x) * 180 / Math.PI;
 /**
- * @param {string} x
+ * @param {any} x
  */
 const log = (x) => console.log(x)
 
@@ -53,78 +53,80 @@ class Car {
         this.rotation = 0;
         this.prevRotation = 0;
         this.S = {};
-        this.SA = {};
-        this.SB = {};
-        this.SC = {};
-        this.SD = {};
+        this.A = {};
+        this.B = {};
+        this.C = {};
+        this.D = {};
 
         //Vinkel mellom sentrum og A i startposisjon (når rotation = 0)
         this.pointAngle = atan(this.width / this.height);
         this.radius = 25 * Math.sqrt(5);
     }
     updateVectors() {
-            if (this.rotation === this.prevRotation) {
-                return
-            }
-            this.phi = this.rotation;
-            //Senter av div
-            this.S = {
-                x: this.x + 25,
-                y: this.y + 50
-            }
-
-            //Vektorer fra punkt S til hjørnene,
-            //oppdaterer seg når rotasjon endres, eller x/y endres
-
-
-            this.SA = {
-                x: -this.radius * cos(this.phi + this.pointAngle - 90) + this.S.x,
-                y: this.radius * sin(this.phi + this.pointAngle - 90) + this.S.y
-            }
-            this.SB = {
-                x: -this.radius * cos(this.phi + -this.pointAngle - 90) + this.S.x,
-                y: this.radius * sin(this.phi + -this.pointAngle - 90) + this.S.y
-            }
-            this.SC = {
-                x: -this.radius * cos(this.phi + this.pointAngle + 90) + this.S.x,
-                y: this.radius * sin(this.phi + this.pointAngle + 90) + this.S.y
-            }
-            this.SD = {
-                x: -this.radius * cos(this.phi + -this.pointAngle + 90) + this.S.x,
-                y: this.radius * sin(this.phi + -this.pointAngle + 90) + this.S.y
-            }
-            this.prevRotation = this.rotation;
+        /*
+        if (this.rotation === this.prevRotation) {
+            return
         }
-        /**
-         * @param {string} id
-         */
+        */
+        this.phi = this.rotation;
+        //Senter av div
+        this.S = {
+            x: this.x + 25,
+            y: this.y + 50
+        }
+
+        //Vektorer fra punkt S til hjørnene,
+        //oppdaterer seg når rotasjon endres, eller x/y endres
+
+
+        this.A = {
+            x: -this.radius * cos(this.phi + this.pointAngle - 90) + this.S.x,
+            y: this.radius * sin(this.phi + this.pointAngle - 90) + this.S.y
+        }
+        this.B = {
+            x: -this.radius * cos(this.phi + -this.pointAngle - 90) + this.S.x,
+            y: this.radius * sin(this.phi + -this.pointAngle - 90) + this.S.y
+        }
+        this.C = {
+            x: -this.radius * cos(this.phi + this.pointAngle + 90) + this.S.x,
+            y: this.radius * sin(this.phi + this.pointAngle + 90) + this.S.y
+        }
+        this.D = {
+            x: -this.radius * cos(this.phi + -this.pointAngle + 90) + this.S.x,
+            y: this.radius * sin(this.phi + -this.pointAngle + 90) + this.S.y
+        }
+        //this.prevRotation = this.rotation;
+    }
+    /**
+     * @param {string} id
+     */
     initialize(id) {
-            this.div = document.getElementById(id);
+        this.div = document.getElementById(id);
 
-            let stl = this.div.style;
+        let stl = this.div.style;
 
-            stl.position = "absolute";
-            stl.backgroundColor = "black";
-            //stl.backgroundImage = `url(${this.img})`;
-            //stl.backgroundSize = "100px"
-            stl.width = this.width + "px";
-            stl.height = this.height + "px";
-        }
-        /**
-         * Roterer bilen rundt midtpunktet i bil-div
-         * @param {string} direction
-         */
+        stl.position = "absolute";
+        stl.backgroundColor = "black";
+        //stl.backgroundImage = `url(${this.img})`;
+        //stl.backgroundSize = "100px"
+        stl.width = this.width + "px";
+        stl.height = this.height + "px";
+    }
+    /**
+     * Roterer bilen rundt midtpunktet i bil-div
+     * @param {string} direction
+     */
     turn(direction) {
-            if (direction === "right") {
-                this.rotation -= 5
-                this.div.style.transform = `rotate(${-this.rotation}deg)`
-            } else {
-                this.rotation += 5
-                this.div.style.transform = `rotate(${-this.rotation}deg)`
-            }
+        if (direction === "right") {
+            this.rotation -= 5
+            this.div.style.transform = `rotate(${-this.rotation}deg)`
+        } else {
+            this.rotation += 5
+            this.div.style.transform = `rotate(${-this.rotation}deg)`
         }
-        //Oppdaterer verdier som akselerasjon, fart, posisjon
-        //Setter også riktig posisjon på div i forhold til x og y-variablene
+    }
+    //Oppdaterer verdier som akselerasjon, fart, posisjon
+    //Setter også riktig posisjon på div i forhold til x og y-variablene
     render() {
         this.vx *= friction;
         this.vy *= friction;
@@ -140,26 +142,26 @@ class Car {
 
     }
     collisionCheck() {
-            //String for å vite hvor mange hjørner som har kollidert
-            let collisions = "";
-            ["A", "B", "C", "D"].forEach((f) => {
-                let k = this[f];
-                if (((k.x) > width) || k.x < 0) {
-                    collisions += f;
-                } else if (((k.y) > height) || k.y < 0) {
-                    collisions += f;
-                }
-            })
-
-            //Dersom en kollisjon skjer, log kollisjonshjørner og reset spill
-            if (collisions !== "") {
-                log(collisions);
-                this.reset();
+        //String for å vite hvor mange hjørner som har kollidert
+        let collisions = "";
+        ["A", "B", "C", "D"].forEach((f) => {
+            let k = this[f];
+            if (((k.x) > width) || k.x < 0) {
+                collisions += f;
+            } else if (((k.y) > height) || k.y < 0) {
+                collisions += f;
             }
+        })
 
-
+        //Dersom en kollisjon skjer, log kollisjonshjørner og reset spill
+        if (collisions !== "") {
+            log(collisions);
+            this.reset();
         }
-        //Restarter spill, både posisjon og score
+
+
+    }
+    //Restarter spill, både posisjon og score
     reset() {
         this.x = 100;
         this.y = 100;
@@ -217,14 +219,43 @@ class Stone {
     }
 }
 
-class Funcs {
+let Funcs = {
     /**
-     * @param {object} rect1
-     * @param {object} rect2
+     * Sjekker om 2 et punkt ligger inne i et rektangel
+     * @param {object} rect
+     * @param {object} P
      */
-    doRectOverlap(rect1, rect2) {
-
+    doesRectOverlapPoint(rect, P) {
+        let AB = this.vecBetween(rect.A,rect.B);
+        let AP = this.vecBetween(rect.A, P);
+        let BD = this.vecBetween(rect.B,rect.D);
+        let BP = this.vecBetween(rect.B, P);
+    
+        if ((0 <= this.dot(AB, AP) <= this.dot(AB, AB)) && (0 <= this.dot(BD, BP)) <= this.dot(BD, BD)) {
+            return true
+        }
+        else {
+            return false
+        }
+    },
+    doRectsOverlap(rect1, rect2) {
+        let bool = false
+        "ABCD".split("").forEach((P)=>{
+            if(bool===false) {
+                bool = this.doesRectOverlapPoint(rect1, rect2[P])
+            }
+        })
+    },
+    dot(vec1, vec2) {
+        return (vec1.x * vec2.x + vec1.y + vec2.y)
+    },
+    vecBetween(a, b) {
+        return {
+            x: b.x - a.x,
+            y: b.y - a.y
+        }
     }
+    
 }
 
 window.onload = () => {
@@ -296,6 +327,7 @@ window.onload = () => {
         requestAnimationFrame(animation);
     }
     animation();
+    log(Funcs.doesRectOverlapPoint(tesla, {x:-150, y:-20000}))
 }
 
 //Når highscore er høy nok, initiate end-sequence
