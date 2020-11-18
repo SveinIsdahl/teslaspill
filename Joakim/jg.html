@@ -9,15 +9,26 @@
 </head>
 <body>
     <div id="main">
+        <p></p>
+        <p></p>
+        <h1>Survive!</h1>
+        <div id="wasd"></div>
+        <div id="cybertruck"></div>
         <div id="info">
             <div>Current score: <span id="score"></span></div>
             <div>Highscore: <span id="highscore"></span></div>
-            <div>Score to win: <span id="scorelimit"></span></div>
+            <div>Score to win: <span id="scorelimit">2000</span></div>
             <div id="game">
                 <div id="tesla"></div>
-                <input type="button" value="click me" onclick="movecar()">
+                <div id="cars"></div>
+                <div id="stripe1"></div>
+                <div id="stripe2"></div>
+                <div id="stripe3"></div>
             </div>
         </div>
     </div>
+    <script>
+        setup();
+    </script>
 </body>
 </html>

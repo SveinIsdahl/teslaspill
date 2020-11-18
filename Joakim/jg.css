@@ -10,14 +10,58 @@
     left: 200px;
 }
 
+#wasd {
+    position: absolute;
+    background-image: url("media/bilder/wasd.png");
+    left: 20px;
+    top: 400px;
+    background-position-x: center;
+    background-size: contain;
+    width: var(--imgsize);
+    height: calc(var(--imgsize)* 0.5);
+    background-repeat: no-repeat;
+}
+
+#cybertruck {
+    position: absolute;
+    background-image: url("media/bilder/cybertruck.png");
+    left: 20px;
+    top: 100px;
+    background-position-x: center;
+    background-size: contain;
+    width: var(--imgsize);
+    height: calc(var(--imgsize));
+    background-repeat: no-repeat;
+}
+
 #game {
     position: relative;
     width: 500px;
     height: 600px;
-    border: solid black;
-    left: -700px;
-    bottom: 110px;
+
+    left: -547px;
+    bottom: 107px;
     background-image: url("media/bilder/background.jpg");
+}
+
+#stripe1, #stripe2, #stripe3 {
+    position: relative;
+    border: white solid 2px;
+    width: 2px;
+    height: 600px;
+    background-color: white;
+}
+
+#stripe1 {
+    left: 1250px;
+}
+
+#stripe2 {
+    left: 250px;
+}
+
+#stripe3 {
+    left: 1250px;
 }
 
 #tesla {
