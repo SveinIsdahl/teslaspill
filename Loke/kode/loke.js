@@ -88,4 +88,22 @@ window.onload = function () {
         requestAnimationFrame(animation);
     }
     animation();
+
+    for (let x = -200; x < 200; x++) {
+        let y = f(x); 
+        let div = document.createElement("div");
+        divBane.append(div);
+        div.style.left = x+500+"px";
+        div.style.bottom = y+"px";
+        div.style.width = 2+"px";
+        div.style.height = 2+"px";
+        div.style.backgroundColor = "black";
+        div.style.position = "absolute";
+    }
 }
+
+
+function f(x) {
+    return (-(0.001*x**2) + (40))
+}
+
