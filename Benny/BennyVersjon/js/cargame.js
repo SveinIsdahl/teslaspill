@@ -133,50 +133,12 @@ function Animate() {
 		}
 	}
 
-	// function checkOverlap(pipe, pos) {
-	// 	if (pipesUpper.length >= 2) {
-	// 		console.log("inside if of checkoverlap");
-	// 		for (var i=0; i<pipesUpper.length-1; i++) {
-	// 			if (i==pos) {
-	// 				i++;
-	// 			}
-	// 			if ((pipe.x < (pipesUpper[i].x + 350)) && ((pipe.x + 350) > pipesUpper[i].x)) {
-	// 				console.log("collision detected");
-					
-	// 				if (pipe.x > pipesUpper[i].x) {
-	// 					var diff = pipe.x - (50 + pipesUpper[i].x);
-	// 					console.log(pipe.x, pipesUpper[i].x);
-	// 					if (diff < 0) {
-	// 						pipe.x += (300 + Math.abs(diff));
-	// 					} else {
-	// 						pipe.x += (300 - Math.abs(diff));
-	// 					}
-	// 					console.log("if",pipe.x, pipesUpper[i].x);
-	// 				} else {
-	// 					console.log("else",pipe.x, pipesUpper[i].x);
-	// 					var diff = pipe.x - pipesUpper[i].x;
-	// 					console.log(diff);
-	// 					if (diff <= 50) {
-	// 						pipe.x += (300 + Math.abs(diff));
-	// 					} else {
-	// 						pipesUpper[i].x += (300 - Math.abs(diff));
-	// 					}
-	// 					console.log("else",pipe.x, pipesUpper[i].x);
-	// 				}
-	// 				// console.log(pipe.x);
-					
-	// 			}
-	// 		}
-	// 		pipe.draw();
-	// 	}
-	// }
-
 	function restartGame() {
 		clearInterval(moveInterval);
 		count = 0;
 		console.log("restarting");
 		delete animate;
-		document.getElementById("container").innerHTML = "Game Over!" + "<br>" +"Your score is : " + score + "<br>" + "Press space to restart!!!!";
+		document.getElementById("container").innerHTML = "Game Over!" + "<br>" +"Your score is : " + score + "<br>" + "Press SPACE to restart";
 		score = 0;
 		var checkRestart = function(event) {
 			if (event.keyCode == 32) {
