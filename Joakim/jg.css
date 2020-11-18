@@ -1,6 +1,36 @@
+#main {
+    position: absolute;
+    width: 800px;
+    height: 600px;
+    border: solid black;
+    left: 200px;
+}
+
+#game {
+    position: relative;
+    width: 500px;
+    height: 600px;
+    border: solid black;
+    left: -700px;
+    bottom: 110px;
+    background-image: url("media/bilder/background.jpg");
+}
+
+#tesla {
+    position: absolute;
+    background-image: url("media/bilder/tesla.png");
+    left: 300px;
+    top: 300px;
+    background-position-x: center;
+    background-size: contain;
+    width: var(--imgsize);
+    height: calc(var(--imgsize) * 0.6);
+    background-repeat: no-repeat;
+}
+
 #info {
     position: absolute;
-    left: 600px;
+    right: -250px;
     top: 50px;
     border: solid black;
     width: 200px;
