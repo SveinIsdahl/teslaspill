@@ -1,3 +1,7 @@
+:root {
+    --imgsize: 260px;
+}
+
 #main {
     position: absolute;
     width: 800px;
@@ -19,12 +23,12 @@
 #tesla {
     position: absolute;
     background-image: url("media/bilder/tesla.png");
-    left: 300px;
-    top: 300px;
+    left: 0px;
+    top: 400px;
     background-position-x: center;
     background-size: contain;
     width: var(--imgsize);
-    height: calc(var(--imgsize) * 0.6);
+    height: calc(var(--imgsize)* 0.6);
     background-repeat: no-repeat;
 }
 
