@@ -2,11 +2,25 @@
     --imgsize: 260px;
 }
 
+#header {
+    position: absolute;
+    width: 320px;
+    height: 100px;
+    left: 200px;
+}
+.header {
+    padding: 1px;
+    background: black;
+    text-align: center;
+    color: white;
+    font-size: 35px;
+}
+
 #main {
     position: absolute;
     width: 800px;
     height: 600px;
-    border: solid black;
+    border: solid grey 2px;
     left: 200px;
 }
 
@@ -26,7 +40,7 @@
     position: absolute;
     background-image: url("media/bilder/cybertruck.png");
     left: 20px;
-    top: 100px;
+    top: 200px;
     background-position-x: center;
     background-size: contain;
     width: var(--imgsize);
@@ -38,36 +52,43 @@
     position: relative;
     width: 500px;
     height: 600px;
-
+    border: grey 1px solid;
     left: -547px;
     bottom: 107px;
     background-image: url("media/bilder/background.jpg");
 }
 
-#stripe1, #stripe2, #stripe3 {
-    position: relative;
-    border: white solid 2px;
-    width: 2px;
-    height: 600px;
-    background-color: white;
+#stripe1, #stripe2, #stripe3, #stripe4, #stripe5, #stripe6, #stripe7, #stripe8, #stripe9, #stripe10, #stripe11, #stripe12 {
+    position: absolute;
+    background-image: url("media/bilder/gul\ linje.png");
+    height: calc(var(--imgsize)*0.6);
+    width: calc(var(--imgsize)*0.5);
+    top: 0px;
+    left: -10px;
+    background-position-x: center;
+    background-size: contain;
+    background-repeat: none;
 }
-
-#stripe1 {
-    left: 1250px;
+#stripe2, #stripe6, #stripe10 {
+    left: 100px;
 }
-
-#stripe2 {
-    left: 250px;
+#stripe3, #stripe7, #stripe11 {
+    left: 210px;
 }
-
-#stripe3 {
-    left: 1250px;
+#stripe4, #stripe8, #stripe12 {
+    left: 320px;
+}
+ #stripe5, #stripe6, #stripe7, #stripe8 {
+    top: 280px;
+}
+#stripe9, #stripe10, #stripe11, #stripe12 {
+    top: 530px;
 }
 
 #tesla {
     position: absolute;
     background-image: url("media/bilder/tesla.png");
-    left: 0px;
+    left: -20px;
     top: 400px;
     background-position-x: center;
     background-size: contain;
