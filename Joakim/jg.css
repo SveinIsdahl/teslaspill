@@ -68,6 +68,7 @@
     background-position-x: center;
     background-size: contain;
     background-repeat: none;
+    animation: movelines linear 5s infinite;
 }
 #stripe2, #stripe6, #stripe10 {
     left: 100px;
@@ -83,6 +84,10 @@
 }
 #stripe9, #stripe10, #stripe11, #stripe12 {
     top: 530px;
+}
+
+@keyframes movelines {
+    100% {top: 200px;}
 }
 
 #tesla {
@@ -104,4 +109,13 @@
     border: solid black;
     width: 200px;
     height: 56px;
+}
+
+#start {
+    position: absolute;
+    left: 80%;
+    top: 60%;
+    font-size: 5rem;
+    background-color: black;
+    color: white;
 }

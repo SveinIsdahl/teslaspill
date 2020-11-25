@@ -2,7 +2,16 @@
 
 var imageOffset = -20
 
+const BtnStart = document.getElementById("start");
+
 function setup() {
+
+
+
+  BtnStart.addEventListener("click", function start() {
+    
+  })
+
 
 addEventListener("keypress", function movecar(e) {
 
@@ -17,6 +26,4 @@ addEventListener("keypress", function movecar(e) {
     return;
   }
 }) 
-
-
 }
